@@ -1,0 +1,456 @@
+﻿@{
+    ViewBag.Title = "房型";
+
+}
+
+
+<main>
+    <div class="main">
+        <div class="container-fuild ">
+            <img src="~/Images/photo1.jpg" class="img-fluid" alt="">
+
+        </div>
+
+        <div class="mainarearoom">
+            <div id="containerWithBorder" class="container">
+                <div class="qbookboxpmar">
+                    <div class="inline-elements">
+                        <span class="captionqbookopen">快 速 訂 房</span>
+                        <label for="selectBox ">房型：</label>
+
+                        <div class="qbook1">
+                            <select class="form-select" id="RoomtypeDropdown" aria-label="Default select example">
+                                <option selected value="0">請選擇房型</option>
+                            </select>
+                        </div>
+
+                       
+                        <label for="ar_date" class="form-label">入住日:</label><input type="date" class="form-control" id="ar_date">
+                        <label for="de_date" class="form-label">退房日:</label><input type="date" class="form-control" id="de_date">
+                        <button type="button"  id="booking"class="btn btn-dark " style="margin-left: 10px;"><i class="fa fa-search"></i>搜尋</button>
+                    </div>
+                </div>
+            </div>
+            <div id="contentToShowByDefault">
+                <div id="doubleRoomInfo">
+                    <div class="row-room">
+                        <div class="row">
+
+
+
+                            <div class="col-lg-5">
+                                <img src="~/images/s4_pic2.jpg" alt="" class="img-fluid rounded" style="width:500px;object-fit:scale-down;">
+                            </div>
+
+                            <div class="col-lg-7">
+                                <h2>A01森林區-南風苑雙人房</h2>
+                                <div class="separator3"></div>
+                                <ul>
+                                    <li>
+                                        平日價格：2800元
+                                    </li>
+                                    <li>
+                                        假日價格：3600元
+                                    </li>
+                                </ul>
+
+                                <div class="button-and-quantity-container">
+                                    <button type="button" id="btnOrder" class="btn btn-primary btnOrder">加入訂單</button>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div id="otherRoomInfo2">
+                    <div class="row-room">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <img src="~/images/s4_pic2.jpg" alt="" class="img-fluid rounded" style="width:500px;object-fit:scale-down;">
+                            </div>
+
+                            <div class="col-lg-7">
+                                <h2>C01河畔區-南風苑雙人房</h2>
+                                <div class="separator3"></div>
+                                <ul>
+                                    <li>
+                                        平日價格：2800元
+                                    </li>
+                                    <li>
+                                        假日價格：3600元
+                                    </li>
+                                  
+                                </ul>
+                                <div class="button-and-quantity-container text-end">
+                                    <button type="button" class="btn btn-primary">加入訂單</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <hr />
+            <div class="text-end">
+                <button type="button" class="btn btn-danger">下一步</button>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+@section scripts
+{
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const roomTypeId = urlParams.get('roomTypeId');
+
+
+if (roomTypeId === '1') {
+
+document.getElementById('doubleRoomInfo').style.display = 'block';
+
+document.getElementById('otherRoomInfo1').style.display = 'none';
+document.getElementById('otherRoomInfo2').style.display = 'none';
+document.getElementById('otherRoomInfo3').style.display = 'none';
+
+} else if (roomTypeId === '2') {
+
+document.getElementById('otherRoomInfo1').style.display = 'block';
+
+document.getElementById('doubleRoomInfo').style.display = 'none';
+document.getElementById('otherRoomInfo2').style.display = 'none';
+document.getElementById('otherRoomInfo3').style.display = 'none';
+
+} else if (roomTypeId === '3') {
+
+document.getElementById('otherRoomInfo2').style.display = 'block';
+
+document.getElementById('doubleRoomInfo').style.display = 'none';
+document.getElementById('otherRoomInfo1').style.display = 'none';
+document.getElementById('otherRoomInfo3').style.display = 'none';
+
+} else if (roomTypeId === '4') {
+document.getElementById('otherRoomInfo3').style.display = 'block';
+
+document.getElementById('doubleRoomInfo').style.display = 'none';
+document.getElementById('otherRoomInfo1').style.display = 'none';
+document.getElementById('otherRoomInfo2').style.display = 'none';
+} else {
+
+}
+</script>
+<script>
+const roomtypeDropdown = document.getElementById('RoomtypeDropdown');
+
+
+window.addEventListener('load', function () {
+fetch('/api/RoomsApi/')
+.then(response => response.json())
+.then(data => {
+console.log(data);
+roomtypeDropdown.innerHTML = '';
+
+const defaultOption = document.createElement('option');
+defaultOption.value = '0';
+defaultOption.text = '請選擇房型';
+roomtypeDropdown.append(defaultOption);
+
+for (let i = 0; i < data.length; i++) {
+const option = document.createElement('option');
+option.value = data[i].value;
+option.text = data[i].name;
+roomtypeDropdown.append(option);
+}
+})
+.catch(error => {
+console.error(error);
+});
+});
+</script>
+
+
+
+<script>
+$(document).ready(function () {
+$("#RoomtypeDropdown").change(function () {
+const selectedRoomType = $(this).val();
+
+if (selectedRoomType === '0') {
+
+$("#doubleRoomInfo, #otherRoomInfo1, #otherRoomInfo2, #otherRoomInfo3").show();
+} else {
+
+$("#doubleRoomInfo, #otherRoomInfo1, #otherRoomInfo2, #otherRoomInfo3").hide();
+
+if (selectedRoomType === '1') {
+$("#doubleRoomInfo").show();
+} else if (selectedRoomType === '2') {
+$("#otherRoomInfo1").show();
+} else if (selectedRoomType === '3') {
+$("#otherRoomInfo2").show();
+} else if (selectedRoomType === '4') {
+$("#otherRoomInfo3").show();
+}
+}
+});
+});
+</script>
+
+
+<script>
+    const arDateInput = document.getElementById('ar_date');
+    const deDateInput = document.getElementById('de_date');
+document.addEventListener("DOMContentLoaded", function () {
+var today = new Date();
+today.setDate(today.getDate() + 1);
+arDateInput.min = today.toISOString().split("T")[0];
+
+arDateInput.addEventListener("change", function () {
+var selectedDate = new Date(arDateInput.value);
+var nextDay = new Date(selectedDate);
+nextDay.setDate(selectedDate.getDate() + 1);
+deDateInput.value = nextDay.toISOString().split("T")[0];
+
+var maxDate = new Date(selectedDate);
+maxDate.setDate(selectedDate.getDate() + 14);
+deDateInput.max = maxDate.toISOString().split("T")[0];
+});
+});
+</script>
+
+
+@*<script>
+document.addEventListener("DOMContentLoaded", function () {
+var arDateInput = document.getElementById("ar_date");
+var deDateInput = document.getElementById("de_date");
+var roomtypeDropdown = document.getElementById('RoomtypeDropdown');
+var searchButton = document.getElementById('searchButton');
+var searchResult = document.getElementById('searchResult');
+
+searchButton.addEventListener('click', function () {
+var selectedRoomType = roomtypeDropdown.value;
+var checkInDate = arDateInput.value;
+var checkOutDate = deDateInput.value;
+
+if (selectedRoomType !== '0' && checkInDate && checkOutDate) {
+$.ajax({
+url: '/api/ValidateBooking', 
+type: 'POST',
+data: {
+RoomType: selectedRoomType,
+CheckInDate: checkInDate,
+CheckOutDate: checkOutDate
+},
+success: function (data) {
+if (data.valid) {
+    searchResult.innerHTML = '房型可用，您可以預訂';
+} else {
+    searchResult.innerHTML = '房型不可用，請選擇其他日期或房型。';
+}
+},
+error: function (xhr, textStatus, errorThrown) {
+console.error('發生錯誤:', errorThrown);
+}
+});
+} else {
+searchResult.innerHTML = '請選擇有效的日期和房型。';
+}
+});
+});
+</script>*@
+
+        
+    <script>
+const RoomtypeDropdown = document.getElementById('RoomtypeDropdown');
+const arDateInput = document.getElementById('ar_date');
+const deDateInput = document.getElementById('de_date');
+const callApiButton = document.getElementById('btnOrder');
+
+
+callApiButton.addEventListener('click', () => {
+const selectedRoomType = RoomtypeDropdown.value;
+const checkInDate = arDateInput.value;
+const checkOutDate = deDateInput.value;
+
+const requestData = {
+cartId:9 ,
+RoomId: selectedRoomType,
+checkInDate: checkInDate,
+checkOutDate: checkOutDate,
+extraBed: false,
+extraBedPrice: 500,
+days: 3,
+SubTotal: 5000,
+};
+
+
+$.ajax({
+url: '/api/Cart/AddCartItem',
+type: 'POST',
+contentType: 'application/json',
+data: JSON.stringify(requestData),
+success: function (data) {
+
+console.log('成功響應:', data);
+
+},
+error: function (xhr, textStatus, errorThrown) {
+
+console.error('發生錯誤:', errorThrown);
+
+}
+});
+});
+</script>
+
+
+<script>
+    var now = new Date();
+    var jsonCartVm = {
+        StartDateTime: now.toISOString(), // 使用 ISO 格式的字符串表示时间
+        EndDateTime: now.toISOString()
+    }
+
+    var num = 9;
+    $(document).ready(function () {
+        $(".btnOrder").click(function () {
+
+            //console.log("success");
+            //var jsonStrCartVm = JSON.stringify(jsonCartVm);
+            //fetch("/api/NewCarts?vm=" + jsonStrCartVm)
+            // .then(response => response.json())
+            //    .then(data => {
+            //        console.log(data);
+            //    })
+            //    .catch(error => {
+            //        console.error(error);
+            //    });
+
+            $.ajax({
+                url: '/api/NewCarts',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(jsonCartVm),
+                success: function (data) {
+                    console.log('成功響應:', data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error('發生錯誤:', errorThrown);
+                }
+            })
+        });
+    });
+
+</script>
+
+
+
+}
+
+@section css{
+<style type="text/css">
+
+body {
+background-image: url(../images/home_bg.png);
+background-size: contain;
+background-position: top;
+}
+
+.row-room {
+border: 1px solid #ccc;
+padding: 15px;
+margin: 3% 0 3%;
+border-radius: 15px;
+}
+
+#containerWithBorder {
+background-color: #6cb22c;
+border: 2px solid #6cb22c;
+display: flex;
+justify-content: center;
+padding: 6px;
+border-radius: 10px;
+}
+
+#searchButton {
+background-color: burlywood;
+color: #6cb22c;
+}
+
+#searchButton:hover {
+background-color: #fff;
+color: #6cb22c;
+}
+
+.separator3 {
+border-bottom: 3px solid green;
+margin-bottom: 10px;
+}
+
+.button-and-quantity-container {
+display: flex;
+justify-content: flex-end;
+}
+
+.spacer {
+flex-grow: 0.01; /* 让间距元素填充剩余空间 */
+margin: 0 10px; /* 设置左右间距 */
+}
+
+.quantity-selector {
+display: flex;
+justify-content: flex-end;
+flex-direction: row;
+padding: 5px; /* 保持水平布局 */
+}
+
+#contentToShowByDefault {
+margin-top: 30px;
+}
+
+.container-fluid img {
+margin-top: -80px;
+width: 100%;
+max-height: 550px;
+object-fit: cover;
+margin-bottom: 20px;
+}
+
+.captionqbookopen {
+color: #fff;
+text-align: center;
+font-size: 1.5rem;
+font-weight: bold;
+margin-right: 10px;
+}
+
+.mainarearoom {
+max-width: 1000px;
+margin: 2% auto;
+}
+
+.qbookboxpmar {
+width: 100%;
+}
+
+.qbookboxpmar .inline-elements {
+display: flex;
+justify-content: space-around;
+align-items: baseline;
+}
+
+.form-control {
+width: 20%;
+}
+</style>
+}

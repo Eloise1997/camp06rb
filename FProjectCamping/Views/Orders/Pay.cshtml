@@ -1,0 +1,82 @@
+﻿@model FProjectCamping.Models.ViewModels.Orders.PayOrderVm
+@{
+    ViewBag.Title = "Pay";
+}
+@section css{
+    <link rel="stylesheet" href="~/css/Progress.css">
+    <link rel="stylesheet" href="~/css/Pay.css">
+}
+<div class="main">
+    <div class="container mt-5 mb-5">
+        <div class="payarea">
+
+            <div class="payPage">
+
+                <!--進度條 begin-->
+                <ul class="progressarea">
+                    <li>購物車</li>
+                    <li>訂單資料</li>
+                    <li class="active">建立訂單</li>
+                    <li>付款</li>
+                </ul>
+                <!--進度條 end-->
+                <div class="col-lg-12 mx-auto ps-4 pe-4 row align-content-space-between">
+
+                    <div class="text-start">
+
+                        <div class="form-horizontal row ">
+                            <div class="righttitle">
+                                <h3 class="border-bottom pb-3">訂單建立完成</h3>
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.OrderNumber, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.OrderNumber)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.Price)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.PaymentType, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.PaymentType)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.Status)
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.Name)
+                            </div>
+
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label col-md-3" })
+                                @Html.DisplayFor(model => model.Email)
+                            </div>
+
+                            <div class="mb-3 col-12 col-md-6">
+                                @Html.LabelFor(model => model.PhoneNum, htmlAttributes: new { @class = "form-label col-md-2" })
+                                @Html.DisplayFor(model => model.PhoneNum)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end mt-3">
+                        <i class="bi bi-arrow-left-square-fill"></i>
+                        @Html.ActionLink("回到我的訂單", "MyOrders", "Members")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '訂單建立成功',
+            text: '感謝您訂購，請繼續完成付款',
+        })
+    </script>
+}

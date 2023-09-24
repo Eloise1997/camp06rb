@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "EditPhoto";
+}
+
+@section css{
+    <link rel="stylesheet" href="~/Content/main_member.css">
+    <style>
+        .membericon::before {
+            display: none;
+        }
+
+        .membericon {
+            background: none;
+        }
+    </style>
+}
+
+<div class="container">
+    <div class="memberarea">
+        <div class="row memberinner justify-content-around">
+            @{
+                Html.RenderPartial("_mod_membernav");
+            }
+            <div class="col-lg-8 ps-4 pe-4 row align-content-space-between">
+                <div class="text-start">
+                    @using (Html.BeginForm("Index", "Members", FormMethod.Post, new { enctype = "multipart/form-data", name = "uploadForm" }))
+                    {
+                        @Html.ValidationSummary(true)
+                        <div class="form-horizontal row ">
+                            <div class="righttitle">
+                                <h3 class="border-bottom pb-3">個人大頭照編輯</h3>
+                            </div>
+                            <div class="col-10"><input class="form-control" type="file" id="fileInput" name="photoFile"></div>
+                            <div class="col-2"><input type="submit" value="確認" class="btn btn-dark" /></div>
+                        </div>
+                    }
+                </div>
+                <div class="text-end mt-3 backtomember">
+                    <i class="bi bi-arrow-left-square-fill"></i>
+                    @Html.ActionLink("回到會員專區", "Index")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fileInput = document.getElementById("fileInput");
+            const filePreview = document.getElementById("filePreview");
+
+            fileInput.addEventListener("change", function () {
+                const selectedFile = fileInput.files[0];
+
+                if (selectedFile) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        filePreview.src = e.target.result;
+                    };
+
+                    reader.readAsDataURL(selectedFile);
+                }
+            });
+        });
+
+    </script>
+
+}

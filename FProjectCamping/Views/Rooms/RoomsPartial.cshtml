@@ -1,0 +1,132 @@
+﻿@using FProjectCamping.Models.ViewModels
+@{
+    ViewBag.Title = "Home Page";
+
+    var hotProducts = ViewBag.HotProducts as List<RoomtypeVM>;
+}
+
+
+<main>
+    <div class="main">
+
+
+        <div class="mainarearoom">
+
+            <div id="contentToShowByDefault">
+                <div id="doubleRoomInfo">
+                    <div class="row-room">
+                        <div class="row">
+
+
+                            <div class="col-lg-5">
+                                <img src="/files/@Model.ProductPhoto" width="100" height="100" style="width:500px;object-fit:scale-down;">
+                            </div>
+
+                            <div class="col-lg-7">
+                                <h2>森林區豪華雙人房</h2>
+                                <div class="separator3"></div>
+                                <ul>
+                                    <li>
+                                        平日價格：2800元
+                                    </li>
+                                    <li>
+                                        假日價格：3600元
+                                    </li>
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="otherRoomInfo1">
+                    <div class="row-room">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <img src="~/Images/LINE_ALBUM_2023830_230910_5.jpg" alt="" class="img-fluid rounded" style="width:500px;object-fit:scale-down;">
+                            </div>
+
+                            <div class="col-lg-7">
+                                <h2>森林區豪華家庭房</h2>
+                                <div class="separator3"></div>
+                                <ul>
+                                    <li>
+                                        平日價格：2800元
+                                    </li>
+                                    <li>
+                                        假日價格：3600元
+                                    </li>
+
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="otherRoomInfo2">
+                    <div class="row-room">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <img src="~/Images/LINE_ALBUM_2023830_230910_5.jpg" alt="" class="img-fluid rounded" style="width:500px;object-fit:scale-down;">
+                            </div>
+
+                            <div class="col-lg-7">
+                                <h2>河畔區豪華雙人房</h2>
+                                <div class="separator3"></div>
+                                <ul>
+                                    <li>
+                                        平日價格：2800元
+                                    </li>
+                                    <li>
+                                        假日價格：3600元
+                                    </li>
+
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="otherRoomInfo3">
+                    <div class="row-room">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <img src="~/Images/LINE_ALBUM_2023830_230910_5.jpg" alt="" class="img-fluid rounded" style="width:500px;object-fit:scale-down;">
+                            </div>
+
+                            <div class="col-lg-7">
+                                <h2>河畔區豪華家庭房</h2>
+                                <div class="separator3"></div>
+                                <ul>
+                                    <li>
+                                        平日價格：2800元
+                                    </li>
+                                    <li>
+                                        假日價格：3600元
+                                    </li>
+
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</main>
+
+@section css{
+    <link rel="stylesheet" href="~/Content/Roomtype.css">
+}
