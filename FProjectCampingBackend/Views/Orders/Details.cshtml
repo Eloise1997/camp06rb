@@ -1,57 +1,61 @@
-﻿@model FProjectCampingBackend.Models.EFModels.Order
+﻿@model IEnumerable<OrderItemsVm>
 
 @{
-    ViewBag.Title = "訂單明細";
+    ViewBag.Title = "訂單內容";
 }
 
-<h2>訂單明細</h2>
+<h2>訂單內容</h2>
 
-<div>
 
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Member.Account)
-        </dt>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomNum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckInDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckOutDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Days)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubTotal)
+        </th>
+        <th></th>
+    </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.Member.Account)
-        </dd>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckInDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckOutDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Days)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubTotal)
+            </td>
+          
+        </tr>
+    }
+</table>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PaymentType.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaymentType.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OrderTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrderTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalPrice)
-        </dd>
-    </dl>
+<div >
+    @Html.ActionLink("訂單頁面", "Index")
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
