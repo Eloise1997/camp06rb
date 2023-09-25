@@ -142,6 +142,7 @@ namespace FProjectCamping.Models.Services
 			});
 		}
 
+
 		private (string roomName, string roomTypeName, int roomPrice, int extraPrice) GetRoomTypeName(List<RoomType> roomTypes, List<Room> rooms, int roomId)
 		{
 			var room = rooms.FirstOrDefault(x => x.Id == roomId);

@@ -31,6 +31,7 @@ namespace FProjectCamping.Models.ViewModels.Orders
 		/// 金額
 		/// </summary>
 		[Display(Name = "金額")]
+		[DisplayFormat(DataFormatString = "{0:#,#}")]
 		public int Price { get; set; }
 
 		/// <summary>

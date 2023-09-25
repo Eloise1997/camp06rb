@@ -41,7 +41,7 @@
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            <!-- JavaScript 生成的表格内容将插入到这里 -->
+                            
                         </tbody>
                     </table>
 
@@ -58,7 +58,7 @@
                     <!--優惠碼專區 end-->
                     <div class="bottomArea">
                         <button type="button" id="back">上一頁</button>
-                        <button type="button" id="next">下一步</button>
+                        <button type="button" id="next">下一頁</button>
                     </div>
                     <div class="buyerInfo">
 
@@ -89,53 +89,58 @@
     </div>
 </div>
 @section scripts{
-    <script>
+    <script> // 0925 rabbit
+        document.getElementById('back')
+            .addEventListener('click', function ()
+            {
+                window.location.href = '@Url.Action("Cart", "Carts")';
+        });
+
         // 生成假資料
-        function generateFakeData() {
-            const data = [
-                ["森林", "雙人房", "2023-09-10", "2023-09-10", "$20.00", "1晚", "", "", "$60.00", ""],
-                ["森林 ", "雙人房", "2023-09-10", "2023-09-10", "$20.00", "1晚", "", "", "$60.00", ""],
-                ["河畔", "雙人房", "2023-09-10", "2023-09-10", "$20.00", "1晚", "", "", "$60.00", ""],
-                ["河畔", "雙人房", "2023-09-10", "2023-09-10", "$20.00", "1晚", "", "", "$60.00", ""],
-                ["河畔", "家庭房", "2023-09-10", "2023-09-10", "$20.00", "1晚", "", "", "$60.00", ""]
-            ];
+        //function generateFakeData() {
+        //    const data = [
+        //        ["森林", "雙人房", "2023-09-10", "2023-09-10", "$20.00", "1晚", "", "", "$60.00", ""],
+        //        ["森林 ", "雙人房", "2023-09-10", "2023-09-10", "$20.00", "1晚", "", "", "$60.00", ""],
+        //        ["河畔", "雙人房", "2023-09-10", "2023-09-10", "$20.00", "1晚", "", "", "$60.00", ""],
+        //        ["河畔", "雙人房", "2023-09-10", "2023-09-10", "$20.00", "1晚", "", "", "$60.00", ""],
+        //        ["河畔", "家庭房", "2023-09-10", "2023-09-10", "$20.00", "1晚", "", "", "$60.00", ""]
+        //    ];
 
-            const tableBody = document.getElementById("tableBody");
+        //    const tableBody = document.getElementById("tableBody");
 
-            data.forEach((item, index) => {
-                const row = document.createElement("tr");
+        //    data.forEach((item, index) => {
+        //        const row = document.createElement("tr");
 
-                item.forEach((value, columnIndex) => {
-                    const cell = document.createElement("td");
-                    cell.textContent = value;
-                    if (columnIndex === 6) { // 第七列是是否加床
-                        const checkbox = document.createElement("input");
-                        checkbox.type = "checkbox";
-                        checkbox.checked = value; // 根据数据设置初始复选框状态
-                        checkbox.classList.add("extra-checkbox"); // 添加自定義的 CSS 類別
-                        checkbox.addEventListener("change", () => {
-                            updateBedAmount(index, checkbox.checked);
-                        });
-                        cell.appendChild(checkbox);
-                    } else {
-                        cell.textContent = value;
-                    }
-                    row.appendChild(cell);
+        //        item.forEach((value, columnIndex) => {
+        //            const cell = document.createElement("td");
+        //            cell.textContent = value;
+        //            if (columnIndex === 6) { // 第七列是是否加床
+        //                const checkbox = document.createElement("input");
+        //                checkbox.type = "checkbox";
+        //                checkbox.checked = value; // 根据数据设置初始复选框状态
+        //                checkbox.classList.add("extra-checkbox"); // 添加自定義的 CSS 類別
+        //                checkbox.addEventListener("change", () => {
+        //                    updateBedAmount(index, checkbox.checked);
+        //                });
+        //                cell.appendChild(checkbox);
+        //            } else {
+        //                cell.textContent = value;
+        //            }
+        //            row.appendChild(cell);
 
-                    // if (columnIndex === item.length - 1) {
-                    //     const deleteButton = document.createElement("button");
-                    //     deleteButton.textContent = "刪除";
-                    //     deleteButton.classList.add("delete-button"); // 加入樣式
-                    //     deleteButton.addEventListener("click", () => {
-                    //         deleteRow(index);
-                    //     });
-                    //     cell.appendChild(deleteButton);
-                    // }
-                });
-                tableBody.appendChild(row);
-            });
-        }
+        //            // if (columnIndex === item.length - 1) {
+        //            //     const deleteButton = document.createElement("button");
+        //            //     deleteButton.textContent = "刪除";
+        //            //     deleteButton.classList.add("delete-button"); // 加入樣式
+        //            //     deleteButton.addEventListener("click", () => {
+        //            //         deleteRow(index);
+        //            //     });
+        //            //     cell.appendChild(deleteButton);
+        //            // }
+        //        });
+        //        tableBody.appendChild(row);
+        //    });
+        //}
 
-        generateFakeData();
-    </script>
-}
+        //generateFakeData();
+    </script> }

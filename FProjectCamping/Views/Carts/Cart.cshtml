@@ -84,7 +84,7 @@
                     @Html.HiddenFor(model => model.TotalPrice)
                     <div class="bottomArea">
                         <button type="button" id="back">上一頁</button>
-                        <button type="submit" id="next">下一步</button>
+                        <button type="submit" id="next">下一頁</button>
                     </div>
                     <!-- 表格部分 -->
                 </div>
@@ -93,6 +93,13 @@
     </div>
 }
 @section scripts{
+    <script> // 0925 rabbit
+        document.getElementById('back')
+            .addEventListener('click', function ()
+            {
+                window.location.href = '@Url.Action("Roomtype", "Rooms")';
+        });
+    </script>
     <script>
         //Swal.fire({
         //    position: 'top-end',

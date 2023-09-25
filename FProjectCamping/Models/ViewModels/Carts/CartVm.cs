@@ -1,5 +1,6 @@
 ﻿using FProjectCamping.Models.ViewModels.Members;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace FProjectCamping.Models.ViewModels.Carts

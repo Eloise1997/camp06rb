@@ -26,7 +26,6 @@ namespace FProjectCamping.Models.EFModels
 		public virtual DbSet<RoomService> RoomServices { get; set; }
 		public virtual DbSet<RoomType> RoomTypes { get; set; }
 		public virtual DbSet<Service> Services { get; set; }
-		public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 		public virtual DbSet<User> Users { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -56,10 +55,6 @@ namespace FProjectCamping.Models.EFModels
 
 			modelBuilder.Entity<Order>()
 				.Property(e => e.PhoneNum)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<Order>()
-				.Property(e => e.Email)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<Order>()
@@ -100,10 +95,6 @@ namespace FProjectCamping.Models.EFModels
 				.HasMany(e => e.RoomServices)
 				.WithRequired(e => e.Room)
 				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<RoomType>()
-				.Property(e => e.ExtraBedPrice)
-				.HasPrecision(18, 0);
 
 			modelBuilder.Entity<RoomType>()
 				.HasMany(e => e.Photos)

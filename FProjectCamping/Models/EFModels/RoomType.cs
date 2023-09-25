@@ -23,8 +23,7 @@ namespace FProjectCamping.Models.EFModels
 
         public int DisplayOrder { get; set; }
 
-        [Column(TypeName = "numeric")]
-        public decimal ExtraBedPrice { get; set; }
+        public int ExtraBedPrice { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Photo> Photos { get; set; }

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace FProjectCamping.Models.ViewModels.Orders
 {
-    public class OrderItems
+	public class OrderItems
 	{
 		/// <summary>
 		/// 房型
@@ -24,24 +24,27 @@ namespace FProjectCamping.Models.ViewModels.Orders
 		/// 入住日
 		/// </summary>
 		[Display(Name = "入住日")]
-		public string CheckInDate { get; set; }
+		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+		public DateTime CheckInDate { get; set; }
 
 		/// <summary>
 		/// 退房日
 		/// </summary>
 		[Display(Name = "退房日")]
-		public string CheckOutDate { get; set; }
+		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+		public DateTime CheckOutDate { get; set; }
 
 		/// <summary>
 		/// 天數
 		/// </summary>
-		[Display(Name = "天數")]
+		[Display(Name = "夜數")]
 		public int Days { get; set; }
 
 		/// <summary>
 		/// 小計
 		/// </summary>
 		[Display(Name = "小計")]
+		[DisplayFormat(DataFormatString = "{0:#,#}")]
 		public int SubTotal { get; set; }
 	}
 }
