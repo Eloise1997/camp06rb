@@ -127,5 +127,11 @@
 }
 @section scripts{
     <script>
+        // 0925 rabbit
+        document.getElementById('back')
+            .addEventListener('click', function ()
+            {
+                window.location.href = '@Url.Action("Cart", "Carts")';
+        });
     </script>
 }

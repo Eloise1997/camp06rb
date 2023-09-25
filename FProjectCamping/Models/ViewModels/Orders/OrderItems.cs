@@ -24,14 +24,14 @@ namespace FProjectCamping.Models.ViewModels.Orders
 		/// 入住日
 		/// </summary>
 		[Display(Name = "入住日")]
-		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+		[DisplayFormat(DataFormatString = "{yyyy/MM/dd}")]
 		public DateTime CheckInDate { get; set; }
 
 		/// <summary>
 		/// 退房日
 		/// </summary>
 		[Display(Name = "退房日")]
-		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+		[DisplayFormat(DataFormatString = "{yyyy/MM/dd}")]
 		public DateTime CheckOutDate { get; set; }
 
 		/// <summary>
