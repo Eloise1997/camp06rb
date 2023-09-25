@@ -17,5 +17,20 @@
 
 .order-message {
     margin-left: 45%;
-    margin-top: 10;
+    margin-top: 10px;
 }
+
+#GoPay, #MyOrder {
+    margin-left: 10px;
+    background-color: #f1bc99;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+    #GoPay, #MyOrder:hover {
+        background-color: #d49f7b;
+    }
