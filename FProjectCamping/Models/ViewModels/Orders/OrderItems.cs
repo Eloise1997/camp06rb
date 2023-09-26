@@ -12,7 +12,7 @@ namespace FProjectCamping.Models.ViewModels.Orders
 		/// 房型
 		/// </summary>
 		[Display(Name = "房型")]
-		public string RoomType { get; set; }
+		public string RoomId { get; set; }
 
 		/// <summary>
 		/// 房號
