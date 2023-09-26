@@ -20,10 +20,10 @@ namespace FProjectCampingBackend.Models.Repostories
 		{
 			IQueryable<Order> parameter = db.Orders;
 
-			//if (!string.IsNullOrEmpty(vm.Id))
-			//{
-			//	query = query.Where(x => x.Id.Contains(vm.Id)); // todo 訂單編號
-			//}
+			if (!string.IsNullOrEmpty(vm.OrderNumber))
+			{
+				parameter = parameter.Where(x => x.OrderNumber.Contains(vm.OrderNumber)); // todo 訂單編號
+			}
 			if (!string.IsNullOrEmpty(vm.Name))
 			{
 				parameter = parameter.Where(x => x.Name.Contains(vm.Name));
