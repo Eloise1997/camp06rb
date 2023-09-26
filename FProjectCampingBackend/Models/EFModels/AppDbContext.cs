@@ -1,3 +1,4 @@
+using FProjectCampingBackend.Models.EFModels;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -54,7 +55,15 @@ namespace FProjectCampingBackend.Models.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Order>()
+				.Property(e => e.OrderNumber)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<Order>()
 				.Property(e => e.PhoneNum)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<Order>()
+				.Property(e => e.Email)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<Order>()
