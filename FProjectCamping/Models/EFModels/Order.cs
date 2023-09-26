@@ -35,7 +35,7 @@ namespace FProjectCamping.Models.EFModels
         public string PhoneNum { get; set; }
 
         [Required]
-        [StringLength(256)]
+        [StringLength(50)]
         public string Email { get; set; }
 
         [StringLength(50)]

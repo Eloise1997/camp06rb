@@ -115,9 +115,8 @@ namespace FProjectCamping.Controllers
 		//return View(model);
 		//}
 
-		public ActionResult Pay()
+		public ActionResult Pay(int orderId)
 		{
-			int orderId = 5;
 			var model = _orderService.GetOrder(orderId);
 			return View(model);
 		}

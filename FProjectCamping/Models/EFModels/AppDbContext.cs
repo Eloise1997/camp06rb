@@ -58,6 +58,10 @@ namespace FProjectCamping.Models.EFModels
 				.IsUnicode(false);
 
 			modelBuilder.Entity<Order>()
+				.Property(e => e.Email)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<Order>()
 				.Property(e => e.Coupon)
 				.IsUnicode(false);
 

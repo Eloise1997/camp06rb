@@ -1,24 +1,33 @@
 ﻿using FProjectCampingBackend.Models.EFModels;
+using FProjectCampingBackend.Models.Repostories;
+using FProjectCampingBackend.Models.Services;
 using FProjectCampingBackend.Models.ViewModels.Orders;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Web.Mvc;
+using PagedList;
 
 namespace FProjectCampingBackend.Controllers
 {
 	public class OrdersController : Controller
 	{
 		private AppDbContext db = new AppDbContext();
+		private readonly OrderService _OrderService = new OrderService();
 
 		// GET: Orders
-		public ActionResult Index()
+
+		public ActionResult Index(SearchParameterVm vm, int page = 1, int pageSize = 15)
 		{
-			var orders = db.Orders.Include(o => o.Member).Include(o => o.PaymentType);
+			ViewData["Status"] = _OrderService.GetStatusDropdownList();
+			var repo = new OrderRepository(db);
+			IQueryable<Order> parameter = repo.GetOrders(vm);
+
+			// 遍歷資料庫中的訂單，並將其轉換為 ViewModel
 			var result = new List<OrderVm>();
-			foreach (var order in orders)
+			foreach (var order in parameter)
 			{
 				var orderVm = new OrderVm()
 				{
@@ -26,14 +35,19 @@ namespace FProjectCampingBackend.Controllers
 					OrderTime = order.OrderTime,
 					PaymentType = order.PaymentType.Name,
 					Price = order.TotalPrice,
-					Status = order.Status.ToString(), // todo
+					Status = order.Status.ToString(),
+					Member = order.Member.Name,
 					Name = order.Name,
 					Email = order.Email,
 					PhoneNum = order.PhoneNum
 				};
 				result.Add(orderVm);
 			}
-			return View(result);
+
+			// 使用ToPagedList進行分頁
+			var pagedOrders = result.OrderBy(x => x.OrderTime).ToPagedList(page, pageSize);
+
+			return View(pagedOrders);
 		}
 
 		// GET: Orders/Details/5

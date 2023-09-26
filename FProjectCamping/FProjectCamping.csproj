@@ -326,7 +326,6 @@
     <Content Include="Views\Rooms\RoomsPartial.cshtml" />
     <Content Include="Views\Rooms\Roomtype.cshtml" />
     <Content Include="Views\Carts\Cart.cshtml" />
-    <Content Include="Views\Carts\ConfirmOrder.cshtml" />
     <Content Include="Views\Carts\OrderInfo.cshtml" />
     <Content Include="Views\Members\MyOrders.cshtml" />
     <Content Include="Views\Orders\Pay.cshtml" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -39,6 +40,12 @@ namespace FProjectCampingBackend.Models.ViewModels.Orders
 		/// </summary>
 		[Display(Name = "訂單狀態")]
 		public string Status { get; set; }
+
+		/// <summary>
+		/// 會員姓名
+		/// </summary>
+		[Display(Name = "會員姓名")]
+		public string Member { get; set; }
 
 		/// <summary>
 		/// 訂購人姓名
