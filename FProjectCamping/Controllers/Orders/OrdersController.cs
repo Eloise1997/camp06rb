@@ -115,6 +115,7 @@ namespace FProjectCamping.Controllers
 		//return View(model);
 		//}
 
+		[Authorize]
 		public ActionResult Pay(int orderId)
 		{
 			var model = _orderService.GetOrder(orderId);

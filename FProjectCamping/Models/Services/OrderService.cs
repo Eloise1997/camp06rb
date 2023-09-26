@@ -15,7 +15,7 @@ namespace FProjectCamping.Models.Services
 		private readonly OrderRepository _orderRepository = new OrderRepository();
 		private readonly PaymentTypeRepository _paymentTypeRepository = new PaymentTypeRepository();
 
-		public void CreateOrder(string account, CartVm cart)
+		public int CreateOrder(string account, CartVm cart)
 		{
 			// todo : 拉到Repo
 			var db = new AppDbContext();
@@ -24,6 +24,7 @@ namespace FProjectCamping.Models.Services
 			var order = new Order
 			{
 				MemberId = memberId,
+				OrderNumber = "AA000011", // todo
 				Name = cart.ContactProfile.Name,
 				PhoneNum = cart.ContactProfile.PhoneNum,
 				Email = cart.ContactProfile.Email,
@@ -32,6 +33,7 @@ namespace FProjectCamping.Models.Services
 				Status = 1, // todo : 建立enum
 				PaymentTypeId = cart.PaymentType,
 				TotalPrice = cart.TotalPrice,
+				Memo = cart.Memo
 			};
 			// 新增訂單明細
 			foreach (var item in cart.Items)
@@ -39,18 +41,19 @@ namespace FProjectCamping.Models.Services
 				var orderItem = new OrderItem
 				{
 					RoomId = item.RoomId,
-					//RoomName = item.RoomName, // todo
+					RoomName = item.RoomName,
 					Days = item.Days,
 					CheckInDate = Convert.ToDateTime(item.CheckInDate),
 					CheckOutDate = Convert.ToDateTime(item.CheckOutDate),
 					ExtraBed = item.ExtraBed,
 					ExtraBedPrice = item.ExtraBedPrice,
-					SubTotal = item.SubTotal
+					SubTotal = item.SubTotal,
 				};
 				order.OrderItems.Add(orderItem);
 			}
-			db.Orders.Add(order);
+			var newOrder = db.Orders.Add(order);
 			db.SaveChanges();
+			return newOrder.Id;
 		}
 
 		public PayOrderVm GetOrder(int orderId)
