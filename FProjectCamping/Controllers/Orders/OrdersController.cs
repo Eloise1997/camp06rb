@@ -19,14 +19,8 @@ namespace FProjectCamping.Controllers
             return View();
         }
 
-        public ActionResult Pay()
-        {
-            int orderId = 5;
-            var model = _orderService.GetOrder(orderId);
-            return View(model);
-        }
-
-        public ActionResult Paypal()
+        [HttpPost]
+        public ActionResult Paypal(int orderId, int totalPrice, string orderNumber)
         {
             // 設定APIContext
             var config = ConfigManager.Instance.GetProperties();
@@ -43,18 +37,18 @@ namespace FProjectCamping.Controllers
                     new Transaction
                     {
                         description = "商品描述",
-                        invoice_number = new Random().Next(100000).ToString(), // 生成一個隨機的發票號碼
-                        amount = new Amount { currency = "USD", total = "20.00" }, // 設定金額和貨幣
+                        invoice_number = orderNumber,
+                        amount = new Amount { currency = "TWD", total = totalPrice.ToString() }, // 設定金額和貨幣
                     }
                 },
                 redirect_urls = new RedirectUrls
                 {
-                    return_url = "http://localhost:yourport/Home/ExecutePayment", // 付款完成後返回的URL
-                    cancel_url = "http://localhost:yourport/Home/Payment" // 付款取消後返回的URL
+                    return_url = "http://localhost:yourport/Orders/CallBack", // 付款完成後返回的URL
+                    cancel_url = $"http://localhost:yourport/Orders/Pay?orderId={orderId}" // 付款取消後返回的URL
                 }
             });
 
-            // 取得並傳送PayPal付款頁面的鏈接到前端
+            // 取得並轉導PayPal付款頁面
             var links = payment.links.GetEnumerator();
             string paypalRedirectUrl = null;
             while (links.MoveNext())
@@ -66,6 +60,39 @@ namespace FProjectCamping.Controllers
                 }
             }
             return Redirect(paypalRedirectUrl);
+        }
+
+        /// <summary>
+        /// Paypal CallBack 接口
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult CallBack()
+        {
+            // 從查詢參數中獲取付款ID和Payer ID
+            var paymentId = Request.Params["paymentId"];
+            var payerId = Request.Params["PayerID"];
+
+            // 使用提供的ID來執行付款
+            var config = ConfigManager.Instance.GetProperties();
+            var accessToken = new OAuthTokenCredential(config).GetAccessToken();
+            var apiContext = new APIContext(accessToken);
+            var executedPayment = new Payment() { id = paymentId }.Execute(apiContext, new PaymentExecution { payer_id = payerId });
+
+            // 取得訂單編號
+            var orderNumber = executedPayment.transactions[0].invoice_number;
+
+            // 付款成功
+            if (executedPayment.state.ToLower() == "approved")
+            {
+                _orderService.UpdateStatus(orderNumber, Common.OrderStatusEnum.Payment);
+            }
+            else // 例外狀況: 付款失敗
+            {
+                _orderService.UpdateStatus(orderNumber, Common.OrderStatusEnum.Failed);
+            }
+
+            return RedirectToAction("Index", "Member");
         }
 
         [Authorize]
