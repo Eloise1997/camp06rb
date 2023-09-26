@@ -13,10 +13,11 @@ namespace FProjectCampingBackend.Models.Services
 			var items = new List<SelectListItem>
 		{
 			new SelectListItem { Value = "", Text = "請選擇" },
-			new SelectListItem { Value = "Unpaid", Text = "未付款" },
-			new SelectListItem { Value = "Paid", Text = "已付款" },
-			new SelectListItem { Value = "Cancelled", Text = "已取消" },
-			new SelectListItem { Value = "Completed", Text = "已完成" },
+			new SelectListItem { Value = "1", Text = "尚未付款" },
+			new SelectListItem { Value = "2", Text = "付款完成" },
+			new SelectListItem { Value = "3", Text = "付款失敗" },
+			new SelectListItem { Value = "4", Text = "取消訂單" },
+			new SelectListItem { Value = "5", Text = "完成訂單" },
 		};
 			return new SelectList(items, "Value", "Text");
 		}
