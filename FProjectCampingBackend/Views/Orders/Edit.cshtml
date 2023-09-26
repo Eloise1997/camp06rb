@@ -18,10 +18,10 @@
 
         <div class="mb-3">
             @*@Html.LabelFor(model => model.MemberId, "MemberId", htmlAttributes: new { @class = "form-label col-md-2" })*@
-            @Html.LabelFor(model => model.MemberId, "會員", htmlAttributes: new { @class = "form-label col-md-2" })
+            @Html.LabelFor(model => model.Member.Name, "會員", htmlAttributes: new { @class = "form-label col-md-2" })
             @*@Html.DropDownList("MemberId", null, htmlAttributes: new { @class = "form-control" })*@
-            @Html.DisplayFor(model => model.MemberId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.MemberId, "", new { @class = "text-danger" })
+            @Html.DisplayFor(model => model.Member.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Member.Name, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
@@ -39,10 +39,10 @@
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(model => model.PaymentTypeId, "付款方式", htmlAttributes: new { @class = "form-label col-md-2" })
+            @Html.LabelFor(model => model.PaymentType.Name, "付款方式", htmlAttributes: new { @class = "form-label col-md-2" })
             @*@Html.DropDownList("PaymentTypeId", null, htmlAttributes: new { @class = "form-control" })*@
-            @Html.DisplayFor(model => model.PaymentTypeId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.PaymentTypeId, "", new { @class = "text-danger" })
+            @Html.DisplayFor(model => model.PaymentType.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.PaymentType.Name, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">

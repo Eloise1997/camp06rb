@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FProjectCampingBackend.Models.EFModels.Order>
+﻿@model IEnumerable<FProjectCampingBackend.Models.ViewModels.Orders.OrderVm>
 
 @{
     ViewBag.Title = "訂單管理";
@@ -10,45 +10,63 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Member.Account)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PaymentType.Name)
+            @Html.DisplayNameFor(model => model.OrderNumber)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.OrderTime)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.PaymentType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TotalPrice)
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNum)
         </th>
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Member.Account)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaymentType.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            </td>
-        </tr>
-    }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaymentType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNum)
+        </td>
+        <td>
+            @Html.ActionLink("編輯", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("詳細資訊", "Details", new { id=item.Id }) |
+        </td>
+    </tr>
+}
+
 </table>

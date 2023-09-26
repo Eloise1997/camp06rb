@@ -39,6 +39,7 @@ namespace FProjectCamping.Models.Services
 				var orderItem = new OrderItem
 				{
 					RoomId = item.RoomId,
+					//RoomName = item.RoomName,
 					Days = item.Days,
 					CheckInDate = Convert.ToDateTime(item.CheckInDate),
 					CheckOutDate = Convert.ToDateTime(item.CheckOutDate),

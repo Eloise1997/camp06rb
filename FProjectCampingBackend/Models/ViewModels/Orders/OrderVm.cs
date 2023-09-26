@@ -6,6 +6,8 @@ namespace FProjectCampingBackend.Models.ViewModels.Orders
 {
 	public class OrderVm
 	{
+		public int Id { get; set; }
+
 		/// <summary>
 		/// 訂單編號
 		/// </summary>
@@ -16,7 +18,8 @@ namespace FProjectCampingBackend.Models.ViewModels.Orders
 		/// 訂單日期
 		/// </summary>
 		[Display(Name = "訂單日期")]
-		public string OrderTime { get; set; }
+		[DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+		public DateTime OrderTime { get; set; }
 
 		/// <summary>
 		/// 付款方式
@@ -55,11 +58,11 @@ namespace FProjectCampingBackend.Models.ViewModels.Orders
 		[Display(Name = "訂購人電話")]
 		public string PhoneNum { get; set; }
 
-		public List<OrderItems> OrderItems { get; set; }
+		public List<OrderItemsVm> OrderItems { get; set; }
 	}
 }
 
-public class OrderItems
+public class OrderItemsVm
 {
 	/// <summary>
 	/// 房型
@@ -71,21 +74,19 @@ public class OrderItems
 	/// 房號
 	/// </summary>
 	[Display(Name = "房號")]
-	public int RoomNum { get; set; }
+	public string RoomNum { get; set; }
 
 	/// <summary>
 	/// 入住日
 	/// </summary>
 	[Display(Name = "入住日")]
-	[DisplayFormat(DataFormatString = "{yyyy/MM/dd}")]
-	public DateTime CheckInDate { get; set; }
+	public string CheckInDate { get; set; }
 
 	/// <summary>
 	/// 退房日
 	/// </summary>
 	[Display(Name = "退房日")]
-	[DisplayFormat(DataFormatString = "{yyyy/MM/dd}")]
-	public DateTime CheckOutDate { get; set; }
+	public string CheckOutDate { get; set; }
 
 	/// <summary>
 	/// 天數
