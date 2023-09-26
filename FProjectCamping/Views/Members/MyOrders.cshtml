@@ -82,7 +82,8 @@
                                                 @foreach (var items in item.OrderItems)
                                                 {
                                                     <tr>
-                                                        <td>@items.RoomType</td>
+
+                                                        <td>@items.RoomName</td>
                                                         <td>@items.CheckInDate.ToString("yyyy/MM/dd")</td>
                                                         <td>@items.CheckOutDate.ToString("yyyy/MM/dd")</td>
                                                         <td>@items.Days</td>

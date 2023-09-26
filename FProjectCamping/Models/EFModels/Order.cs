@@ -16,6 +16,10 @@ namespace FProjectCamping.Models.EFModels
 
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(20)]
+        public string OrderNumber { get; set; }
+
         public int MemberId { get; set; }
 
         public DateTime OrderTime { get; set; }
@@ -35,11 +39,14 @@ namespace FProjectCamping.Models.EFModels
         public string PhoneNum { get; set; }
 
         [Required]
-        [StringLength(256)]
+        [StringLength(50)]
         public string Email { get; set; }
 
         [StringLength(50)]
         public string Coupon { get; set; }
+
+        [StringLength(100)]
+        public string Memo { get; set; }
 
         public virtual Member Member { get; set; }
 

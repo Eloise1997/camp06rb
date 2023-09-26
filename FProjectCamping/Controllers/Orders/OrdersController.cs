@@ -19,103 +19,6 @@ namespace FProjectCamping.Controllers
             return View();
         }
 
-        //public ActionResult GetByMember()
-        //{
-        //#region Fake Data
-
-        //var model = new List<GetByMemberVm>
-        //{
-        //	new GetByMemberVm()
-        //	{
-        //		DisplayNumber = 1,
-        //		OrderNumber = "AA0915230001",
-        //		OrderTime = "2023/09/15",
-        //		PaymentType = "現金",
-        //		Price = 36000,
-        //		Status = "已完成",
-        //		OrderItems = new List<OrderItems>
-        //		{
-        //			new OrderItems
-        //			{
-        //				RoomType = "森林雙人房",
-        //				CheckInDate = "2023/09/15",
-        //				CheckOutDate = "2023/09/17",
-        //				Days = 2,
-        //				SubTotal = 1800,
-        //			},
-        //			new OrderItems
-        //			{
-        //				RoomType = "森林四人房",
-        //				CheckInDate = "2023/09/15",
-        //				CheckOutDate = "2023/09/17",
-        //				Days = 2,
-        //				SubTotal = 3500,
-        //			}
-        //		}
-        //	},
-        //	new GetByMemberVm()
-        //	{
-        //		DisplayNumber = 2,
-        //		OrderNumber = "AA0915230002",
-        //		OrderTime = "2023/09/17",
-        //		PaymentType = "現金",
-        //		Price = 555,
-        //		Status = "已完成",
-        //		OrderItems = new List<OrderItems>
-        //		{
-        //			new OrderItems
-        //			{
-        //				RoomType = "森林雙人房",
-        //				CheckInDate = "2023/09/15",
-        //				CheckOutDate = "2023/09/17",
-        //				Days = 2,
-        //				SubTotal = 1800,
-        //			},
-        //			new OrderItems
-        //			{
-        //				RoomType = "森林四人房",
-        //				CheckInDate = "2023/09/15",
-        //				CheckOutDate = "2023/09/17",
-        //				Days = 2,
-        //				SubTotal = 3500,
-        //			}
-        //		}
-        //	},
-        //	new GetByMemberVm()
-        //	{
-        //		DisplayNumber = 3,
-        //		OrderNumber = "AA0915230003",
-        //		OrderTime = "2023/09/19",
-        //		PaymentType = "現金",
-        //		Price = 3600,
-        //		Status = "已完成",
-        //		OrderItems = new List<OrderItems>
-        //		{
-        //			new OrderItems
-        //			{
-        //				RoomType = "森林雙人房",
-        //				CheckInDate = "2023/09/15",
-        //				CheckOutDate = "2023/09/17",
-        //				Days = 2,
-        //				SubTotal = 1800,
-        //			},
-        //			new OrderItems
-        //			{
-        //				RoomType = "森林四人房",
-        //				CheckInDate = "2023/09/15",
-        //				CheckOutDate = "2023/09/17",
-        //				Days = 2,
-        //				SubTotal = 3500,
-        //			}
-        //		}
-        //	}
-        //};
-
-        //#endregion Fake Data
-
-        //return View(model);
-        //}
-
         public ActionResult Pay()
         {
             int orderId = 5;
@@ -136,14 +39,14 @@ namespace FProjectCamping.Controllers
                 intent = "sale",
                 payer = new Payer { payment_method = "paypal" },
                 transactions = new List<Transaction>
-        {
-            new Transaction
-            {
-                description = "商品描述",
-                invoice_number = new Random().Next(100000).ToString(), // 生成一個隨機的發票號碼
-                amount = new Amount { currency = "USD", total = "20.00" }, // 設定金額和貨幣
-            }
-        },
+                {
+                    new Transaction
+                    {
+                        description = "商品描述",
+                        invoice_number = new Random().Next(100000).ToString(), // 生成一個隨機的發票號碼
+                        amount = new Amount { currency = "USD", total = "20.00" }, // 設定金額和貨幣
+                    }
+                },
                 redirect_urls = new RedirectUrls
                 {
                     return_url = "http://localhost:yourport/Home/ExecutePayment", // 付款完成後返回的URL
@@ -163,6 +66,13 @@ namespace FProjectCamping.Controllers
                 }
             }
             return Redirect(paypalRedirectUrl);
+        }
+
+        [Authorize]
+        public ActionResult Pay(int orderId)
+        {
+            var model = _orderService.GetOrder(orderId);
+            return View(model);
         }
     }
 }

@@ -1,16 +1,58 @@
-﻿@model IEnumerable<FProjectCampingBackend.Models.EFModels.Member>
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IEnumerable<FProjectCampingBackend.Models.EFModels.Member>
 
 @{
     ViewBag.Title = "Index";
+
 }
 
-<h2>Index</h2>
+<h2>會員管理</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
+<div class="mb-3" style="width:100%">
+    <form action="" method="get">
+        <div class="" style="width: 100%; display: flex; flex-wrap: wrap; align-items: center;">
+
+            <div>
+                名稱:@Html.TextBox("Name", null, new { @class = "form-control form-control-sm me-3", style = "width:auto;display:inline-block;" })
+            </div>
+            <div>
+                帳號:@Html.TextBox("Account", null, new { @class = "form-control form-control-sm me-3", style = "width:auto;display:inline-block;" })
+
+            </div>
+            <div>
+                是否驗證:@Html.DropDownList("IsConfirmed", ViewData["IsConfirmed"] as SelectList, null, new { @class = "form-select form select-sm me-3 ms-3", style = "width:auto;display:inline-block;" })
+            </div>
+            <div>
+                是否停權:@Html.DropDownList("Enabled", null, new { @class = "form-select form select-sm me-3 ms-3", style = "width:auto;display:inline-block;" })
+            </div>
+            <div>
+                建立時間:
+                @Html.TextBox("FirstTime", null, new { @class = "form-control form-control-sm me-3", style = "width:auto;display:inline-block;", type = "date" })
+
+                @Html.TextBox("EndTime", null, new { @class = "form-control form-control-sm me-3", style = "width:auto;display:inline-block;", type = "date" })
+
+            </div>
+
+            <div>
+                <input type="submit" value="查詢" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+
+
+
+
+<table class="table table-striped">
+
+    <tr class="table-dark">
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Account)
         </th>
@@ -24,15 +66,11 @@
         <th>
             @Html.DisplayNameFor(model => model.PhoneNum)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Birthday)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.Enabled)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Photo)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.CreatedTime)
         </th>
@@ -43,43 +81,69 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Account)
-        </td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
 
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Birthday)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Enabled)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Photo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsConfirmed)
-        </td>
+            <td>
 
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id })
-         
-        </td>
-    </tr>
-}
+                @Html.DisplayFor(modelItem => item.Account)
+            </td>
+
+            <td>
+                @if (item.Photo == null)
+                {
+                    <img src="/images/camping_no.jpg" alt="大頭照" class="img-fluid memberPhoto">
+                }
+                else
+                {
+                    <img src="/files/@Html.DisplayFor(modelItem => item.Photo)" alt="@item.Account" class="img-fluid memberPhoto" />
+
+                }
+
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNum)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Enabled)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsConfirmed)
+            </td>
+
+            <td>
+                @Html.ActionLink("編輯", "Edit", new { id = item.Id }, new { @class = "btn btn-dark" })
+
+            </td>
+        </tr>
+    }
 
 </table>
+@Html.PagedListPager((IPagedList)Model, x => Url.Action("Index", new { page = x }))
+
+@section css{
+    <style>
+        .memberPhoto {
+            max-width: 50px;
+            border-radius: 50%;
+        }
+        .pagination-container{
+            text-align:right;
+        }
+    </style>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+
+}

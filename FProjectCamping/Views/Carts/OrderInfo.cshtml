@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/Progress.css">
     <link rel="stylesheet" href="~/css/OrderInfo.css">
 }
-@using (Html.BeginForm("OrderInfo", "Carts", FormMethod.Post))
+@using (Html.BeginForm("OrderInfo", "Carts", FormMethod.Post, new { onsubmit = "return checkPaymentType();" }))
 {
     <div class="conatiner">
         <div class="main">
@@ -41,21 +41,23 @@
                                 </tr>
                             </thead>
                             <tbody id="tableBody">
-                                @foreach (var item in Model.Items)
+                                @for (var i = 0; i < Model.Items.Count; i++)
                                 {
                                     <tr>
-                                        <td>@item.RoomName</td>
-                                        <td>@item.RoomNum</td>
-                                        <td>@item.CheckInDate.ToString("yyyy/MM/dd")</td>
-                                        <td>@item.CheckOutDate.ToString("yyyy/MM/dd")</td>
-                                        <td>@item.RoomPrice</td>
-                                        <td>@item.Days</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomName)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomNum)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].CheckInDate)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].CheckOutDate)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomPrice)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].Days)</td>
                                         <td>
-                                            @*<input type="checkbox" @(item.ExtraBed ? "checked" : "") onchange="updateSubTotal(this, item.ExtraBedPrice)" />*@
-                                            <input type="checkbox" @(item.ExtraBed ? "checked" : "") disabled />
+                                            @Html.CheckBoxFor(model => model.Items[i].ExtraBed, new { disabled = "disabled" })
                                         </td>
-                                        <td data-extraPrice>@(item.ExtraBed ? item.ExtraBedPrice.ToString() : "0")</td>
-                                        <td data-subtotal>@item.SubTotal</td>
+                                        <td data-extraPrice>@(Model.Items[i].ExtraBed ? Model.Items[i].ExtraBedPrice.ToString() : "0")</td>
+                                        <td data-subtotal>@Html.DisplayFor(model => model.Items[i].SubTotal)</td>
+                                        @*統一將欄位傳回後端更新*@
+                                        @Html.HiddenFor(model => model.Items[i].Id)
+                                        @Html.HiddenFor(model => model.Items[i].RoomName)
                                     </tr>
                                 }
                             </tbody>
@@ -64,18 +66,19 @@
 
                         <!--優惠碼專區 begin-->
                         <div class="calPrice">
-                            <div class="coupon">
-                                <label for="coupon">優惠碼：</label>
-                                <input type="text" id="coupon" name="coupon">
-                                @Html.HiddenFor(model => model.Coupon)
-                                <button type="button" id="applyCouponButton">使用</button>
-                            </div>
+                            @*<div class="coupon">
+                                    <label for="coupon">優惠碼：</label>
+                                    <input type="text" id="coupon" name="coupon">
+                                    @Html.HiddenFor(model => model.Coupon)
+                                    <button type="button" id="applyCouponButton">使用</button>
+                                </div>*@
                             <div class="total">
                                 <span>小計：</span><span id="total">@Model.TotalPrice</span>
                                 <br>
-                                <span>折扣：</span><span id="discount"></span>
+                                @*<span>折扣：</span><span id="discount"></span>*@
                                 <br>
-                                <span>總金額：</span><span id="total">@Model.TotalPrice</span>
+                                <span>總金額：</span><span id="total" name="TotalPrice">@Model.TotalPrice</span>
+                                @Html.HiddenFor(model => model.TotalPrice)
                             </div>
                         </div>
                         <!--優惠碼專區 end-->
@@ -116,7 +119,8 @@
 
                             <div class="buyerInfo-memo">
                                 <label for="memo">備註：</label>
-                                <textarea rows="4" cols="50" placeholder="如您有特殊需求，可以在此欄位註明。"></textarea>
+                                <textarea name="memo" rows="4" cols="50" placeholder="如您有特殊需求，可以在此欄位註明。"></textarea>
+                                @Html.HiddenFor(model => model.Memo)
                             </div>
                         </div>
                     </div>
@@ -132,6 +136,15 @@
             .addEventListener('click', function ()
             {
                 window.location.href = '@Url.Action("Cart", "Carts")';
-        });
+            });
+
+        function checkPaymentType() {
+            var paymentType = document.getElementById("PaymentType").value;
+            if (paymentType === "") {
+                alert("請選擇付款方式！");
+                return false;
+            }
+            return true;
+        }
     </script>
 }

@@ -14,10 +14,6 @@ namespace FProjectCamping.Models.EFModels
 
         public int RoomId { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string RoomName { get; set; }
-
         public int Days { get; set; }
 
         [Column(TypeName = "date")]

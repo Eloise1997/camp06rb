@@ -9,25 +9,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Dela+Gothic+One&family=Kaisei+Decol&family=Kaisei+Tokumin&family=Mochiy+Pop+P+One&family=Yuji+Mai&display=swap" />
-          @Styles.Render("~/Content/css")
-          @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("css", required: false)
     <style>
         .hometitle {
-        font-family: 'Kaisei Tokumin', serif;
+            font-family: 'Kaisei Tokumin', serif;
         }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark flex-wrap justify-content-center">
         <div class="container">
-           
+
             <a class="navbar-brand hometitle" href="@Url.Action("Index", "Home", new { area = "" })">
                 <span>
                     <img src="~/images/camping.png" alt="" style="width: 28px;"
                          class="img-fluid align-baseline">
                 </span>Camping放鬆村-後台
             </a>
-
         </div>
 
         <div class="container">
@@ -49,7 +49,7 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
+        <footer class="text-center">
             <p>&copy; @DateTime.Now.Year - Camping放鬆村</p>
         </footer>
     </div>

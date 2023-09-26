@@ -14,15 +14,17 @@ namespace FProjectCamping.Controllers.Cart
 		private readonly Models.Services.ProfileService _profileService = new Models.Services.ProfileService();
 		private readonly CartService _cartService = new CartService();
 
-		// GET: Cart
+		[Authorize]
 		public ActionResult Cart()
 		{
-			// memberId 也許是從登入資訊來
-			var model = _cartService.Get("aliee");
+			// 登入者
+			var account = User.Identity.Name;
+			var model = _cartService.Get(account);
 
 			return View(model);
 		}
 
+		[Authorize]
 		[HttpPost]
 		public ActionResult Cart(CartVm vm)
 		{
@@ -31,23 +33,28 @@ namespace FProjectCamping.Controllers.Cart
 			return RedirectToAction("OrderInfo");
 		}
 
+		[Authorize]
 		public ActionResult OrderInfo()
 		{
-			var cart = _cartService.Get("aliee");
+			var account = User.Identity.Name;
+			var cart = _cartService.Get(account);
 
 			// 預設帶入 訂房人資料
-			cart.ContactProfile = _profileService.GetMemberProfile("aliee");
+			cart.ContactProfile = _profileService.GetMemberProfile(account);
 			return View(cart);
 		}
 
+		[Authorize]
 		[HttpPost]
 		public ActionResult OrderInfo(CartVm vm)
 		{
 			if (!ModelState.IsValid) return View(vm);
 
-			//var buyer = User.Identity.Name;
-			var buyer = "aliee";
-			var cart = _cartService.GetOrCreateCart(buyer);
+			// 檢查購物車要有項目 才能後續動作 todo: 給前端錯誤訊息
+			if (!vm.Items.Any()) { return View(vm); }
+
+			var account = User.Identity.Name;
+			var cart = _cartService.GetOrCreateCart(account);
 			cart.AllowCheckout = cart.Items.Any();
 
 			if (cart.AllowCheckout == false)
@@ -56,12 +63,16 @@ namespace FProjectCamping.Controllers.Cart
 				return View(vm);
 			}
 
+			foreach (var item in cart.Items)
+			{
+				item.RoomName = vm.Items.FirstOrDefault(x => x.Id == item.Id).RoomName;
+			}
 			cart.ContactProfile = vm.ContactProfile;
 			cart.Coupon = vm.Coupon;
 			cart.PaymentType = vm.PaymentType;
 
-			_cartService.ProcessCheckout(buyer, cart);
-			return RedirectToAction("Pay", "Orders"); // todo 轉導到結帳頁
+			var orderId = _cartService.ProcessCheckout(account, cart);
+			return RedirectToAction("Pay", "Orders", new { orderId = orderId }); // 轉導到 Orders/Pay 並帶入參數: orderId
 		}
 
 		/// <summary>
@@ -79,37 +90,37 @@ namespace FProjectCamping.Controllers.Cart
 			return result; //沒傳回任何東西
 		}
 
-		[Authorize]
-		public ActionResult Checkout()
-		{
-			var buyer = User.Identity.Name;
-			var cart = _cartService.GetOrCreateCart(buyer);
+		//[Authorize]
+		//public ActionResult Checkout()
+		//{
+		//	var buyer = User.Identity.Name;
+		//	var cart = _cartService.GetOrCreateCart(buyer);
 
-			if (cart.AllowCheckout == false) ViewBag.ErrorMessage = "購物車是空的,無法進行結帳";
+		//	if (cart.AllowCheckout == false) ViewBag.ErrorMessage = "購物車是空的,無法進行結帳";
 
-			return View();
-		}
+		//	return View();
+		//}
 
-		[Authorize]
-		[HttpPost]
-		public ActionResult Checkout(CheckoutVm vm)
-		{
-			if (!ModelState.IsValid) return View(vm);
+		//[Authorize]
+		//[HttpPost]
+		//public ActionResult Checkout(CheckoutVm vm)
+		//{
+		//	if (!ModelState.IsValid) return View(vm);
 
-			var cartService = _cartService;
+		//	var cartService = _cartService;
 
-			var buyer = User.Identity.Name;
-			var cart = cartService.GetOrCreateCart(buyer);
+		//	var buyer = User.Identity.Name;
+		//	var cart = cartService.GetOrCreateCart(buyer);
 
-			if (cart.AllowCheckout == false)
-			{
-				ModelState.AddModelError("", "購物車是空的,無法進行結帳");
-				return View(vm);
-			}
+		//	if (cart.AllowCheckout == false)
+		//	{
+		//		ModelState.AddModelError("", "購物車是空的,無法進行結帳");
+		//		return View(vm);
+		//	}
 
-			//cartService.ProcessCheckout(buyer, cart, vm);
-			return View("ConfirmCheckout"); // todo 轉導到結帳頁
-		}
+		//	//cartService.ProcessCheckout(buyer, cart, vm);
+		//	return View("ConfirmCheckout");
+		//}
 
 		public ActionResult DeleteCartItem(int cartItemId)
 		{

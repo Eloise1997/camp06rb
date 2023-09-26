@@ -32,7 +32,7 @@ namespace FProjectCamping.Models.ViewModels.Orders
 		/// </summary>
 		[Display(Name = "金額")]
 		[DisplayFormat(DataFormatString = "{0:#,#}")]
-		public int Price { get; set; }
+		public int TotalPrice { get; set; }
 
 		/// <summary>
 		/// 訂單狀態
