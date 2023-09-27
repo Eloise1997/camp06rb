@@ -19,7 +19,7 @@ namespace FProjectCampingBackend.Controllers
 
 		// GET: Orders
 
-		public ActionResult Index(SearchParameterVm vm, int page = 1, int pageSize = 15)
+		public ActionResult Index(SearchParameterVm vm, int page = 1, int pageSize = 10)
 		{
 			ViewData["Status"] = _OrderService.GetStatusDropdownList();
 			var repo = new OrderRepository(db);
