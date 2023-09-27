@@ -26,5 +26,21 @@ namespace FProjectCamping.Models.Respositories
 		{
 			return _db.Orders.FirstOrDefault(x => x.Id == orderId);
 		}
+
+		public int? GetLatestId()
+		{
+			return _db.Orders.Select(o => (int?)o.Id).Max();
+		}
+
+		public void UpdateStatus(string orderNumber, int status)
+		{
+			var order = _db.Orders.FirstOrDefault(x => x.OrderNumber == orderNumber);
+
+			if (order != null)
+			{
+				order.Status = status;
+				_db.SaveChanges();
+			}
+		}
 	}
 }

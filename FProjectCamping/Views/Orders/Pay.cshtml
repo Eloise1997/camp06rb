@@ -62,6 +62,11 @@
                     </div>
                     <div class="bottomArea">
                         <button type="button" id="MyOrder">我的訂單</button>
+                        <!-- Payment View -->
+                        @using (Html.BeginForm("Payment", "Home", new { orderId = Model.Id, TotalPrice = Model.TotalPrice }, FormMethod.Post))
+                        {
+                            <input type="submit" value="Pay with PayPal" />
+                        }
                     </div>
                 </div>
             </div>

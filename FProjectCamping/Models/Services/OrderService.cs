@@ -1,9 +1,11 @@
-﻿using FProjectCamping.Models.EFModels;
+﻿using FProjectCamping.Common;
+using FProjectCamping.Models.EFModels;
 using FProjectCamping.Models.Respositories;
 using FProjectCamping.Models.ViewModels.Carts;
 using FProjectCamping.Models.ViewModels.Orders;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using static FProjectCamping.MvcApplication;
@@ -24,13 +26,13 @@ namespace FProjectCamping.Models.Services
 			var order = new Order
 			{
 				MemberId = memberId,
-				OrderNumber = "AA000011", // todo
+				OrderNumber = GenerateOrderNumber(), // 產生唯一訂單
 				Name = cart.ContactProfile.Name,
 				PhoneNum = cart.ContactProfile.PhoneNum,
 				Email = cart.ContactProfile.Email,
 				OrderTime = DateTime.Now,
 				Coupon = cart.Coupon,
-				Status = 1, // todo : 建立enum
+				Status = OrderStatusEnum.Wait.Int(),
 				PaymentTypeId = cart.PaymentType,
 				TotalPrice = cart.TotalPrice,
 				Memo = cart.Memo
@@ -61,7 +63,61 @@ namespace FProjectCamping.Models.Services
 			var order = _orderRepository.GetOrders(orderId);
 			var vm = AutoMapperHelper.MapperObj.Map<PayOrderVm>(order);
 			vm.PaymentType = _paymentTypeRepository.GetTypeName(order.PaymentTypeId).Name;
+			vm.Status = vm.Status.StringToEnum<OrderStatusEnum>().GetAttribute<DisplayAttribute>().Name;
 			return vm;
+		}
+
+		// 產生一筆訂單 AA20230927001
+		public string GenerateOrderNumber()
+		{
+			// 生成隨機的英文字母，前兩碼
+			string orderPrefix = GenerateRandomLetters(2);
+
+			// 取得今天日期，後面8碼
+			string dateSuffix = GenerateDateSuffix();
+
+			// 取得下一個訂單ID
+			int nextOrderId = GetNextOrderId();
+
+			// 生成訂單號碼
+			string orderNumber = $"{orderPrefix}{dateSuffix}{nextOrderId:D3}";
+
+			return orderNumber;
+		}
+
+		public void UpdateStatus(string orderNumber, OrderStatusEnum status)
+		{
+			_orderRepository.UpdateStatus(orderNumber, status.Int());
+		}
+
+		private string GenerateRandomLetters(int length)
+		{
+			Random random = new Random();
+			const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			return new string(Enumerable.Repeat(letters, length)
+				.Select(s => s[random.Next(s.Length)])
+				.ToArray());
+		}
+
+		private string GenerateDateSuffix()
+		{
+			DateTime today = DateTime.Today;
+			string dateSuffix = today.ToString("yyyyMMdd");
+			return dateSuffix;
+		}
+
+		private int GetNextOrderId()
+		{
+			int nextOrderId = 1;
+
+			// 使用LINQ查詢獲取order表中最新一筆ID，並取得下一個ID
+			var maxOrderId = _orderRepository.GetLatestId();
+			if (maxOrderId.HasValue)
+			{
+				nextOrderId = maxOrderId.Value + 1;
+			}
+
+			return nextOrderId;
 		}
 	}
 }
