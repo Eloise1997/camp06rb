@@ -332,6 +332,7 @@
     <Content Include="Views\Carts\OrderInfo.cshtml" />
     <Content Include="Views\Members\MyOrders.cshtml" />
     <Content Include="Views\Orders\Pay.cshtml" />
+    <Content Include="Views\Orders\PaySuccessed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

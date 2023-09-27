@@ -41,36 +41,45 @@
                             </tr>
                         </thead>
                         <tbody id="tableBody">
-                            @for (var i = 0; i < Model.Items.Count; i++)
+                            @if (Model.Items != null)
+                            {
+                                for (var i = 0; i < Model.Items.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomName)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomNum)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].CheckInDate)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].CheckOutDate)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].RoomPrice)</td>
+                                        <td>@Html.DisplayFor(model => model.Items[i].Days)</td>
+                                        <td>
+                                            @Html.CheckBoxFor(model => model.Items[i].ExtraBed, new { onchange = "updateSubTotal(this, " + Model.Items[i].ExtraPrice + ")" })
+                                        </td>
+                                        <td data-extraPrice>@(Model.Items[i].ExtraBed ? Model.Items[i].ExtraBedPrice.ToString() : "0")</td>
+                                        <td data-subtotal>@Html.DisplayFor(model => model.Items[i].SubTotal)</td>
+                                        <td>
+                                            <button class="delete-button" onclick="removeRow(this, @Model.Items[i].SubTotal)">刪除</button>
+                                        </td>
+                                        <td>
+                                            @*統一將欄位傳回後端更新*@
+                                            @Html.HiddenFor(model => model.Items[i].Id)
+                                            @Html.HiddenFor(model => model.Items[i].RoomTypeId)
+                                            @Html.HiddenFor(model => model.Items[i].RoomId)
+                                            @Html.HiddenFor(model => model.Items[i].CheckInDate)
+                                            @Html.HiddenFor(model => model.Items[i].CheckOutDate)
+                                            @Html.HiddenFor(model => model.Items[i].RoomPrice)
+                                            @Html.HiddenFor(model => model.Items[i].Days)
+                                            @Html.HiddenFor(model => model.Items[i].ExtraBed)
+                                            @Html.HiddenFor(model => model.Items[i].ExtraBedPrice)
+                                            @Html.HiddenFor(model => model.Items[i].SubTotal)
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    <td>@Html.DisplayFor(model => model.Items[i].RoomName)</td>
-                                    <td>@Html.DisplayFor(model => model.Items[i].RoomNum)</td>
-                                    <td>@Html.DisplayFor(model => model.Items[i].CheckInDate)</td>
-                                    <td>@Html.DisplayFor(model => model.Items[i].CheckOutDate)</td>
-                                    <td>@Html.DisplayFor(model => model.Items[i].RoomPrice)</td>
-                                    <td>@Html.DisplayFor(model => model.Items[i].Days)</td>
-                                    <td>
-                                        @Html.CheckBoxFor(model => model.Items[i].ExtraBed, new { onchange = "updateSubTotal(this, " + Model.Items[i].ExtraPrice + ")" })
-                                    </td>
-                                    <td data-extraPrice>@(Model.Items[i].ExtraBed ? Model.Items[i].ExtraBedPrice.ToString() : "0")</td>
-                                    <td data-subtotal>@Html.DisplayFor(model => model.Items[i].SubTotal)</td>
-                                    <td>
-                                        <button class="delete-button" onclick="removeRow(this, @Model.Items[i].SubTotal)">刪除</button>
-                                    </td>
-                                    <td>
-                                        @*統一將欄位傳回後端更新*@
-                                        @Html.HiddenFor(model => model.Items[i].Id)
-                                        @Html.HiddenFor(model => model.Items[i].RoomTypeId)
-                                        @Html.HiddenFor(model => model.Items[i].RoomId)
-                                        @Html.HiddenFor(model => model.Items[i].CheckInDate)
-                                        @Html.HiddenFor(model => model.Items[i].CheckOutDate)
-                                        @Html.HiddenFor(model => model.Items[i].RoomPrice)
-                                        @Html.HiddenFor(model => model.Items[i].Days)
-                                        @Html.HiddenFor(model => model.Items[i].ExtraBed)
-                                        @Html.HiddenFor(model => model.Items[i].ExtraBedPrice)
-                                        @Html.HiddenFor(model => model.Items[i].SubTotal)
-                                    </td>
+                                    <td colspan="11">無資料</td>
                                 </tr>
                             }
                         </tbody>
@@ -93,6 +102,16 @@
     </div>
 }
 @section scripts{
+    @if (Model.Items == null)
+    {
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: '請至少預定一間房才可下一步！'
+            });
+        </script>
+    }
     <script>
  // 0925 rabbit
         document.getElementById('back')

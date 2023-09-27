@@ -28,6 +28,12 @@ namespace FProjectCamping.Controllers.Cart
 		[HttpPost]
 		public ActionResult Cart(CartVm vm)
 		{
+			if (vm.Items == null)
+			{
+				ViewBag.ShowSweetAlert = true;
+				return View(vm);
+			}
+
 			_cartService.Update(vm);
 
 			return RedirectToAction("OrderInfo");

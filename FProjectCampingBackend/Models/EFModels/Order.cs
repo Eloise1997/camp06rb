@@ -40,9 +40,6 @@ namespace FProjectCampingBackend.Models.EFModels
 		[StringLength(50)]
 		public string Email { get; set; }
 
-		[StringLength(50)]
-		public string Coupon { get; set; }
-
 		[StringLength(100)]
 		public string Memo { get; set; }
 

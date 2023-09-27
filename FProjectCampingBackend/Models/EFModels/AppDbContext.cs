@@ -67,10 +67,6 @@ namespace FProjectCampingBackend.Models.EFModels
 				.IsUnicode(false);
 
 			modelBuilder.Entity<Order>()
-				.Property(e => e.Coupon)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<Order>()
 				.HasMany(e => e.OrderItems)
 				.WithRequired(e => e.Order)
 				.WillCascadeOnDelete(false);
