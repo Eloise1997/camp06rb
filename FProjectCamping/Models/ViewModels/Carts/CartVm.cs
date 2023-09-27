@@ -24,5 +24,7 @@ namespace FProjectCamping.Models.ViewModels.Carts
 		public string Coupon { get; set; }
 
 		public int PaymentType { get; set; }
+
+		public string Memo { get; set; }
 	}
 }

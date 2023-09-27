@@ -72,7 +72,6 @@
                                             <thead>
                                                 <tr>
                                                     <th>房型</th>
-                                                    <th>房號</th>
                                                     <th>入住日</th>
                                                     <th>退房日</th>
                                                     <th>天數</th>
@@ -83,8 +82,8 @@
                                                 @foreach (var items in item.OrderItems)
                                                 {
                                                     <tr>
-                                                        <td>@items.RoomId</td>
-                                                        <td>@items.RoomNum</td>
+
+                                                        <td>@items.RoomName</td>
                                                         <td>@items.CheckInDate.ToString("yyyy/MM/dd")</td>
                                                         <td>@items.CheckOutDate.ToString("yyyy/MM/dd")</td>
                                                         <td>@items.Days</td>

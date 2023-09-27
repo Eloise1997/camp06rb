@@ -77,7 +77,7 @@
                     </table>
 
                     <div class="totalArea">
-                        <span>小計：</span><span id="total">@Model.TotalPrice</span>
+                        <span>小計：</span><span id="total" name="TotalPrice">@Model.TotalPrice</span>
                     </div>
                     @Html.HiddenFor(model => model.Id)
                     @Html.HiddenFor(model => model.MemberAccount)
@@ -138,6 +138,9 @@
 
             // 更新顯示總金額的元素
             totalLabel.textContent = total.toLocaleString();
+
+            var hiddenTotalPrice = document.getElementById("TotalPrice");
+            hiddenTotalPrice.value = total; // 更新值
         }
 
         // checkbox勾選 需更新 SubTotal

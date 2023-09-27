@@ -97,6 +97,11 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
+<<<<<<< HEAD
+=======
+*.cache
+*.vsidx
+>>>>>>> 6870e52f16560ea1a1eb9c080c919688d181f215
 
 # Chutzpah Test files
 _Chutzpah*

@@ -18,7 +18,7 @@ namespace FProjectCamping.Models.ViewModels.Orders
 		/// 房號
 		/// </summary>
 		[Display(Name = "房號")]
-		public int RoomNum { get; set; }
+		public string RoomName { get; set; }
 
 		/// <summary>
 		/// 入住日

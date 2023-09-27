@@ -7,7 +7,7 @@ namespace FProjectCampingBackend.Models.ViewModels.Orders
 {
 	public class SearchParameterVm
 	{
-		public int Id { get; set; }
+		public string OrderNumber { get; set; }
 		public string Name { get; set; }
 
 		public DateTime? FirstTime { get; set; }

@@ -32,6 +32,7 @@ namespace FProjectCampingBackend.Controllers
 				var orderVm = new OrderVm()
 				{
 					Id = order.Id,
+					OrderNumber = order.OrderNumber,
 					OrderTime = order.OrderTime,
 					PaymentType = order.PaymentType.Name,
 					Price = order.TotalPrice,

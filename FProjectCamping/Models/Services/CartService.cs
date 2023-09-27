@@ -4,6 +4,7 @@ using FProjectCamping.Models.ViewModels.Carts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using static FProjectCamping.MvcApplication;
 
 namespace FProjectCamping.Models.Services
@@ -100,13 +101,15 @@ namespace FProjectCamping.Models.Services
 			new CartItemsRepository().Delete(cartItemId);
 		}
 
-		public void ProcessCheckout(string account, CartVm cart)
+		public int ProcessCheckout(string account, CartVm cart)
 		{
 			// 建立訂單主檔明細檔
-			new OrderService().CreateOrder(account, cart);
+			var id = new OrderService().CreateOrder(account, cart);
 
 			// 清空購物車
 			new CartRepository().EmptyCart(account);
+
+			return id;
 		}
 
 		/// <summary>
@@ -141,7 +144,6 @@ namespace FProjectCamping.Models.Services
 					   itemCheckOutDate >= vmCheckInDate;
 			});
 		}
-
 
 		private (string roomName, string roomTypeName, int roomPrice, int extraPrice) GetRoomTypeName(List<RoomType> roomTypes, List<Room> rooms, int roomId)
 		{

@@ -54,6 +54,10 @@ namespace FProjectCamping.Models.EFModels
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<Order>()
+				.Property(e => e.OrderNumber)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<Order>()
 				.Property(e => e.PhoneNum)
 				.IsUnicode(false);
 
