@@ -146,6 +146,8 @@
     <Compile Include="App_Start\MappingProfile.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\CommonExtensions.cs" />
+    <Compile Include="Common\OrderStatusEnum.cs" />
     <Compile Include="Controllers\Cart\CartApiController.cs" />
     <Compile Include="Controllers\Cart\CartsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
