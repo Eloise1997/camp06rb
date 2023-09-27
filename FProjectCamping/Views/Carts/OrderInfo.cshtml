@@ -131,6 +131,18 @@
 }
 @section scripts{
     <script>
+        $('#name').on('input', function () {
+            $('input[name="ContactProfile.Name"]').val($(this).val());
+        });
+
+        $('#phone').on('input', function () {
+            $('input[name="ContactProfile.PhoneNum"]').val($(this).val());
+        });
+
+        $('#email').on('input', function () {
+            $('input[name="ContactProfile.Email"]').val($(this).val());
+        });
+
         // 0925 rabbit
         document.getElementById('back')
             .addEventListener('click', function ()

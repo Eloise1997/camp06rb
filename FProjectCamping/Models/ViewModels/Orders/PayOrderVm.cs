@@ -46,6 +46,11 @@ namespace FProjectCamping.Models.ViewModels.Orders
         public string Status { get; set; }
 
         /// <summary>
+        /// 訂單狀態
+        /// </summary>
+        public int StatusEnum { get; set; }
+
+        /// <summary>
         /// 訂購人姓名
         /// </summary>
         [Display(Name = "訂購人姓名")]

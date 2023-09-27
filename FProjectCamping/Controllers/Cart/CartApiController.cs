@@ -71,11 +71,22 @@ namespace FProjectCamping.Controllers.Cart
 
         [HttpPost]
         [Route("api/Cart/AddCartItem")]
-        public IHttpActionResult AddCartItem([FromBody] CartItemsVm requestData)
+        public IHttpActionResult AddCartItem([FromBody] CartItemRequestModel requestData)
         {
+            var param = new CartItemsVm() 
+            {
+                RoomId = requestData.roomId,
+                CheckInDate = requestData.checkInDate,
+                CheckOutDate = requestData.checkOutDate,
+                ExtraBed = requestData.extraBed,
+                ExtraBedPrice = requestData.extraBedPrice,
+                Days = requestData.days,
+                SubTotal = requestData.subtotal
+            };
+
             var service = new CartService();
             string buyer = User.Identity.Name; // 買家帳號
-            var result = service.AddToCart(buyer, requestData); //加入購物車
+            var result = service.AddToCart(buyer, param); //加入購物車
 
             return Ok(result);
         }

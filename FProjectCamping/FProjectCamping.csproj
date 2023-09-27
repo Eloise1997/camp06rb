@@ -56,10 +56,6 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Bin\PayPal.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -214,6 +210,7 @@
     <Compile Include="Models\ViewModels\Members\RegisterExts.cs" />
     <Compile Include="Models\ViewModels\Members\RegisterVm.cs" />
     <Compile Include="Models\ViewModels\Members\ResetPasswordVm.cs" />
+    <Compile Include="Models\ViewModels\Orders\CallbackReq.cs" />
     <Compile Include="Models\ViewModels\Orders\GetByMemberVm.cs" />
     <Compile Include="Models\ViewModels\Orders\OrderItems.cs" />
     <Compile Include="Models\ViewModels\Orders\PayOrderVm.cs" />

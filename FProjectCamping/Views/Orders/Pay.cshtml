@@ -59,15 +59,18 @@
                                 @Html.DisplayFor(model => model.PhoneNum)
                             </div>
                         </div>
-                    </div>
+                    </div>                 
                     <div class="bottomArea">
                         <button type="button" id="MyOrder">我的訂單</button>
-                        <!-- Payment View -->
-                        @using (Html.BeginForm("Payment", "Home", new { orderId = Model.Id, TotalPrice = Model.TotalPrice }, FormMethod.Post))
+
+                        <!-- 尚未付款 & 付款失敗 才顯示按鈕 -->
+                        @if (Model.StatusEnum == 1 || Model.StatusEnum == 3)
                         {
-                            <input type="submit" value="Pay with PayPal" />
+                            <!-- Paypal Smart Payment Button -->
+                            <div id="paypal-button-container"></div>
                         }
-                    </div>
+
+                    </div>                   
                 </div>
             </div>
         </div>
@@ -75,6 +78,76 @@
 </div>
 @section scripts{
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AR5g1C8v0pgh-q6LV-bz7cZcn1BqOnFphL3nSo9ayTk4yXyhCps54698SBweAz0gKXH8B020ICRBzM35"></script>
+    <script>
+        paypal.Buttons({
+    createOrder: function(data, actions) {
+        return actions.order.create({
+            purchase_units: [{
+                amount: {
+                    value: '@Model.TotalPrice',
+                    currency_code: 'USD', // 幣別
+                }
+            }]
+        });
+    },
+    onApprove: function (data) {
+        console.log('onApprove', data);
+        fetch('/Orders/CallBack', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                orderNumber: '@Model.OrderNumber',
+                orderId: '@Model.Id',
+                IsSuccessed: true,
+            })
+        }).then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '付款成功'
+        })
+
+    },
+    onError: function (err) {
+        console.log('onError', err);
+        fetch('/Orders/CallBack', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                orderNumber: '@Model.OrderNumber',
+                orderId: '@Model.Id',
+                IsSuccessed: false,
+            })
+        }).then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '付款失敗'
+        })
+    },
+    onCancel: function () {
+        // 取消
+        Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: '取消付款',
+            text: '請盡速完成付款~',
+        })
+    }
+}).render('#paypal-button-container');
+
+    </script>
     <script>
            // 0925 rabbit
         document.getElementById('MyOrder')

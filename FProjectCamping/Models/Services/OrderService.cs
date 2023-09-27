@@ -64,6 +64,7 @@ namespace FProjectCamping.Models.Services
             var vm = AutoMapperHelper.MapperObj.Map<PayOrderVm>(order);
             vm.PaymentType = _paymentTypeRepository.GetTypeName(order.PaymentTypeId).Name;
             vm.Status = vm.Status.StringToEnum<OrderStatusEnum>().GetAttribute<DisplayAttribute>().Name;
+            vm.StatusEnum = order.Status;
             return vm;
         }
 
